@@ -1,0 +1,8 @@
+C:\Projects\BMP\bin\Debug\BMP.exe.config
+C:\Projects\BMP\bin\Debug\BMP.exe
+C:\Projects\BMP\bin\Debug\BMP.pdb
+C:\Projects\BMP\obj\Debug\BMP.csprojResolveAssemblyReference.cache
+C:\Projects\BMP\obj\Debug\BMP.csproj.CoreCompileInputs.cache
+C:\Projects\BMP\obj\Debug\BMP.exe
+C:\Projects\BMP\obj\Debug\BMP.pdb
+C:\Projects\BMP\bin\Debug\Colorful.Console.dll
