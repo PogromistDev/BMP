@@ -21,7 +21,13 @@ namespace BMP
                 case "create":  CreateBMP(uint.Parse(args[1]), uint.Parse(args[2]));break;
                 case "create_mono": CreateBMPmono(uint.Parse(args[1]), uint.Parse(args[2]));break;
                 case "create_nibble": CreateBMPnibble(uint.Parse(args[1]), uint.Parse(args[2])); break;
-                case "read": ReadBMP();break;
+                case "read": ReadBMP(args[1]);break;
+                case "-h": PrintHelp();break;
+                case "-help": PrintHelp(); break;
+                case "/h": PrintHelp(); break;
+                case "/help": PrintHelp(); break;
+                case "/?": PrintHelp(); break;
+
             }
         }
 
@@ -254,9 +260,9 @@ namespace BMP
             fs.Close();
         }
 
-        static void ReadBMP()
+        static void ReadBMP(string path)
         {
-            fs = new FileStream("1.bmp", FileMode.Open);
+            fs = new FileStream(path, FileMode.Open);
 
             uint width, height;
 
@@ -326,6 +332,14 @@ namespace BMP
 
             br.Close();
             fs.Close();
+        }
+
+        static void PrintHelp()
+        {
+            Console.WriteLine("create [width, height] - create 24 bit image");
+            Console.WriteLine("create_mono [width, height] - create 1 bit image");
+            Console.WriteLine("create_nibble [width, height] - create 4 bit image");
+            Console.WriteLine("read [path] - read bmp image");
         }
     }
 }

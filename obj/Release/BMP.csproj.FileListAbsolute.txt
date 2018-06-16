@@ -1,0 +1,8 @@
+C:\github\BMP\obj\Release\BMP.csprojResolveAssemblyReference.cache
+C:\github\BMP\obj\Release\BMP.csproj.CoreCompileInputs.cache
+C:\github\BMP\bin\Release\BMP.exe.config
+C:\github\BMP\bin\Release\BMP.exe
+C:\github\BMP\bin\Release\BMP.pdb
+C:\github\BMP\bin\Release\Colorful.Console.dll
+C:\github\BMP\obj\Release\BMP.exe
+C:\github\BMP\obj\Release\BMP.pdb
