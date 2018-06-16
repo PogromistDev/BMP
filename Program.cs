@@ -20,6 +20,7 @@ namespace BMP
             {
                 case "create":  CreateBMP(uint.Parse(args[1]), uint.Parse(args[2]));break;
                 case "create_mono": CreateBMPmono(uint.Parse(args[1]), uint.Parse(args[2]));break;
+                case "create_nibble": CreateBMPnibble(uint.Parse(args[1]), uint.Parse(args[2])); break;
                 case "read": ReadBMP();break;
             }
         }
@@ -83,7 +84,6 @@ namespace BMP
 
                     bw.Write(new byte[padding]);
                 }
-
             }
 
             //Close file
@@ -131,7 +131,7 @@ namespace BMP
             //YPerMeter
             bw.Write((uint)0);
             //Color used
-            bw.Write((uint)0);
+            bw.Write((uint)2);
             //Important colors number
             bw.Write((uint)0);
 
@@ -144,7 +144,7 @@ namespace BMP
 
             uint imgDivEight = (imageWidth / 8) + (uint)(imageWidth % 8 > 0 ? 1 : 0);
 
-            uint remainder = (imgDivEight >= 4? imgDivEight % 4 : imgDivEight);
+            uint remainder = imgDivEight % 4;
 
 
             for (int height = 0; height < imageHeight; height++)
@@ -152,6 +152,87 @@ namespace BMP
                 for (int width = 0; width < imgDivEight; width++)
                 {
                     bw.Write((byte)0xff);
+                }
+
+                if (remainder > 0)
+                {
+                    uint padding = 4 - remainder;
+
+                    bw.Write(new byte[padding]);
+                }
+
+            }
+
+            long fileSize = bw.BaseStream.Position;
+            bw.BaseStream.Seek(2, SeekOrigin.Begin);
+            bw.Write((uint)fileSize);
+
+            //Close file
+
+            bw.Close();
+            fs.Close();
+        }
+
+        static void CreateBMPnibble(uint imageWidth, uint imageHeight)
+        {
+            fs = new FileStream("16chrome.bmp", FileMode.Create);
+            BinaryWriter bw = new BinaryWriter(fs);
+
+            //File header
+
+            //BMP file signature
+            bw.Write('B');
+            bw.Write('M');
+            //Size of file in bytes
+            bw.Write((uint)0);
+            //Reserved
+            bw.Write((ushort)0);
+            bw.Write((ushort)0);
+            //Offset to the data
+            bw.Write((uint)62);
+
+            //Image header
+
+            //Header size in bytes
+            bw.Write((uint)40);
+            //Image width and height
+            bw.Write(imageWidth);
+            bw.Write(imageHeight);
+            //Planes
+            bw.Write((ushort)1);
+            //Image bit format
+            bw.Write((ushort)4);
+
+            //Compression type
+            bw.Write((uint)0);
+            //SizeImage
+            bw.Write((uint)0);
+            //XPerMeter
+            bw.Write((uint)0);
+            //YPerMeter
+            bw.Write((uint)0);
+            //Color used
+            bw.Write((uint)2);
+            //Important colors number
+            bw.Write((uint)0);
+
+            //Palete
+
+            bw.Write((uint)0x00000000);
+            bw.Write((uint)0x00ffffff);
+
+            //Data
+
+            uint imgDivEight = (imageWidth / 2) + (uint)(imageWidth % 2 > 0 ? 1 : 0);
+
+            uint remainder = imgDivEight % 4;
+
+
+            for (int height = 0; height < imageHeight; height++)
+            {
+                for (int width = 0; width < imgDivEight; width++)
+                {
+                    bw.Write((byte)0x11);
                 }
 
                 if (remainder > 0)
